@@ -1,0 +1,28 @@
+{% load widget_tweaks %}
+{% block extrastyles %}
+<style>
+    .raskari{
+        direction:rtl;
+        text-align:right;
+    }
+</style>
+{% endblock %}
+
+<span class="error-block raskari">{{ form.non_field_errors }}</span>
+{% for field in form %}
+    {% if field.is_hidden %}
+        {{ field }}
+    {% else %}
+        <span class="form-group {% if field.errors %}error{% endif %} raskari">
+            {{ field.label_tag }}
+            {% render_field field class+='form-control' %}
+            {% for error in field.errors %}
+                <ul class="error-block raskari">
+                    <li class="raskari">{{ error }}</li>
+                </ul>
+            {% endfor %}
+            {# No help text as it wraps #}
+        </span>
+    {% endif %}
+{% endfor %}
+
